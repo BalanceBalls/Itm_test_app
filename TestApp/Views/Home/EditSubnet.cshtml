@@ -1,0 +1,34 @@
+﻿@model TestApp.Models.ViewModels.IpAddressValidationModel
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<h2>Идентификатор: @ViewData["IpAddressId"]</h2>
+<h3>Подсеть: @ViewData["IpAddressValue"]</h3>
+
+<p>Изменение IP адреса </p>
+
+
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form asp-action="UpdateIpAddress" asp-controller="Home" asp-anti-forgery="true">
+                        <div class="form-group">
+
+                            <label asp-for="IpAddress">Измените IP адрес</label><br />
+                            <input type="text" asp-for="IpAddress" value=@ViewData["IpAddressValue"] class="form-control" />
+                            <input type="hidden" asp-for="id" value=@ViewData["IpAddressId"]>
+                            <span asp-validation-for="IpAddress" class="text-danger">@TempData["Error"]</span>
+                        </div>
+
+                        <button type="submit" id="sendlogin" class="btn btn-primary">Применить</button>
+                    </form>
+                    <a asp-action="Index" asp-controller="Home"> Вернуться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "Не удалось внести изменения. Пожалуйста, проверьте корректность ввода")

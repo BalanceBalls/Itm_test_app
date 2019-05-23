@@ -1,0 +1,39 @@
+﻿@model TestApp.Models.ViewModels.IpAddressValidationModel
+@{
+    ViewData["Title"] = "About";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Добавление нового IP адреса в базу данных </p>
+
+@if (ViewData.ModelState["GlobalError"] != null && ViewData.ModelState["GlobalError"].Errors.Any())
+{
+    <div class="form-group">
+        <span class="text-danger">@Html.ValidationMessageFor(x => x.IpAddress)</span>
+    </div>
+}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form asp-action="AddIpAddress" asp-controller="Home" asp-anti-forgery="true">
+                        <div class="form-group">
+
+                            <label asp-for="IpAddress">Введите IP адрес</label><br />
+                            <input type="text" asp-for="IpAddress" class="form-control" />
+                            <span asp-validation-for="IpAddress" class="text-danger">@TempData["Error"]</span>
+                        </div>
+
+                        <button type="submit" id="sendlogin" class="btn btn-primary">Добавить</button>
+                    </form>
+                    <a asp-action="Index" asp-controller="Home"> Вернуться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "Не удалось добавить IP адрес. Пожалуйста, проверьте корректность ввода")

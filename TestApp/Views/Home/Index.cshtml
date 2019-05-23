@@ -1,0 +1,35 @@
+﻿@model IEnumerable<IpAddressModel>
+@{
+    ViewData["Title"] = "ITM Test";
+}
+
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Список IP адресов в базе данных</span>
+</nav>
+
+<ul class="list-group">
+    @foreach (var project in Model)
+    {
+        <li class="list-group-item active"><b>Идентификатор @project.Id</b> : @project.IpAdderss</li>
+        <li class="list-group-item">
+            <div class="row">
+                @using (Html.BeginForm("RemoveIpAddress", "Home", FormMethod.Post))
+                {
+
+                    <div class="col-sm-2" style="margin-right: 10px">
+                        <input type="hidden" id="ipAddressID" name="ipAddressId" value=@project.Id>
+                        <input type="submit" class="btn btn-danger" value="Удалить" />
+                    </div>
+
+                }
+                    <div class="col-sm-2" style="margin-right: 10px">
+                        <form asp-action="ChangeIpAddress" asp-controller="Home" asp-anti-forgery="true">
+                            <input type="hidden" id="ipAddressID" name="ipAddressId" value=@project.Id>
+                            <input type="hidden" id="ipAddressVALUE" name="ipAddressValue" value=@project.IpAdderss>
+                            <button type="submit" id="sendlogin" class="btn btn-primary">Изменить</button>
+                        </form>
+                    </div>
+            </div>
+     </li>
+    }
+</ul>
